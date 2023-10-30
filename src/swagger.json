@@ -1,0 +1,290 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API alunos de escola",
+      "description": "Essa API foi desenvolvida para o desafio AWS Generation",
+      "contact": {
+        "email": "babivaldez@gmail.com"
+      },
+      "license": {
+        "name": "Apache 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      },
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3001/",
+        "description": "API de teste"
+      }
+    ],
+    "paths": {
+      "/students/{id}": {
+        "get": {
+          "tags":[
+            "Students"
+          ],
+          "summary": "Busca aluno por id",
+          "description": "Essa rota retorna um aluno específico, de acordo com o id passado como parâmetro",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "id do aluno para busca",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Ok",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type":"object",
+                    "$ref": "#/components/schemas/StudentResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Estudante não encontrado"
+            }
+          }
+        },
+        "put": {
+          "tags":[
+            "Students"
+          ],
+          "summary": "Atualiza os dados de um aluno por id",
+          "description": "Essa rota retorna atualiza os dados de um aluno específico, de acordo com o id passado como parâmetro",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "id do aluno para edição",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentBody"
+                },
+                "examples": {
+                    "student": {
+                        "value": {
+                          "nome": "Luna Andrade",
+                          "idade": 12,
+                          "notaPrimeiroSemestre": 8,
+                          "notaSegundoSemestre": 6,
+                          "professor": "Mônica",
+                          "numeroSala": 14
+                        }
+                    }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Ok",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type":"object",
+                    "$ref": "#/components/schemas/StudentResponse"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Estudante não encontrado"
+            },
+            "400": {
+              "description": "Os dados inseridos são iguais aos dados já cadastrados"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Students"
+          ],
+          "summary": "Deleta um aluno",
+          "description": "Essa rota deleta os dados de um aluno do banco de dados da escola",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "id do aluno para deletar",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Estudante não encontrado"
+            }
+          }
+        }
+      },
+      "/students": {
+        "get": {
+          "tags": [
+            "Students"
+          ],
+          "summary": "Lista todos os alunos",
+          "description": "Essa rota retorna todos os estudantes cadastrados na escola",
+          "responses": {
+            "200": {
+              "description": "search results matching criteria",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/StudentResponse"
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Estudantes não encontrados"
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Students"
+          ],
+          "summary": "Cadastro de novo aluno",
+          "description": "Essa rota adiciona um novo aluno no banco de dados da escola",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentBody"
+                },
+                "examples": {
+                    "student": {
+                        "value": {
+                          "nome": "Ana Carolina de Souza Mattos",
+                          "idade": 12,
+                          "notaPrimeiroSemestre": 5,
+                          "notaSegundoSemestre": 6,
+                          "professor": "Mônica",
+                          "numeroSala": 14
+                        }
+                    }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Aluno cadastrado com sucesso!",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type":"object",
+                    "$ref": "#/components/schemas/StudentResponse"
+                  }
+                }
+              } 
+            },
+            "400a": {
+              "description": "Alguns campos estão vazios. É preciso inserir todas as informações do aluno!"
+            },
+            "400b": {
+              "description": "As notas precisam ser um número!"
+            },
+            "404": {
+              "description": "Estudante já existe no banco de dados"
+            }
+          }
+        }
+      }
+      },
+    "components": {
+      "schemas": {
+        "StudentResponse": {
+          "required": [
+            "id",
+            "idade",
+            "name",
+            "numeroSala",
+            "notaPrimeiroSemestre",
+            "notaSegundoSemestre",
+            "professor"
+          ],
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            },
+            "idade": {
+              "type": "number"
+            },
+            "notaPrimeiroSemestre": {
+              "type": "number"
+            },
+            "notaSegundoSemestre": {
+              "type": "number"
+            },
+            "professor": {
+              "type": "string"
+            },
+            "numeroSala": {
+              "type": "number"
+            }
+          }
+        },
+        "StudentBody": {
+          "required": [
+            "name",
+            "idade",
+            "notaPrimeiroSemestre",
+            "notaSegundoSemestre",
+            "professor",
+            "numeroSala"
+          ],
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "idade": {
+              "type": "number"
+            },
+            "notaPrimeiroSemestre": {
+              "type": "number"
+            },
+            "notaSegundoSemestre": {
+              "type": "number"
+            },
+            "professor": {
+              "type": "string"
+            },
+            "numeroSala": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    }
+  }

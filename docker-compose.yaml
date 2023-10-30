@@ -1,0 +1,44 @@
+version: '3'
+services:
+  node:
+    # ao colocar o user como node, eu consigo rodar o script prestart que está no package.json
+    # Usuário linux padrão do container, não é recomendado usar root
+    # https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md#non-root-user
+    user: "node"
+    # não está chamando adequamente o dockerfile
+    build: .
+    container_name: projetogeneration_api
+    restart: always
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - 3001:3001
+     #Mesmo que `docker run -t`
+    tty: true
+    # # Mesmo que `docker run -i`
+    stdin_open: true
+    # Substitui o comando padrão da imagem do node
+    command: npm run dev
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123456
+      MYSQL_HOST: database
+      MYSQL_PORT: 3306
+    depends_on:
+      database:
+        condition: service_healthy
+
+  database:
+    container_name: projetogeneration_db
+    image: mysql:8.0.23
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: projetogeneration_db
+    ports:
+      - 3306:3306
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5
