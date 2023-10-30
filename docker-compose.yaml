@@ -1,7 +1,6 @@
 version: '3'
 services:
   node:
-    # ao colocar o user como node, eu consigo rodar o script prestart que está no package.json
     # Usuário linux padrão do container, não é recomendado usar root
     # https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md#non-root-user
     user: "node"
