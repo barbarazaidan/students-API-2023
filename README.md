@@ -9,6 +9,6 @@
 
 **3. Rode o comando npm run migrate e, em seguida, o comando npm run seed**
 
-## Caso precise visualizar os logs do container, basta clicar dar o comando docker logs <id-container-api>
+## Caso precise visualizar os logs do container, basta clicar dar o comando docker logs id-container-api
 
 
