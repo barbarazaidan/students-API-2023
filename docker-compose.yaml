@@ -18,7 +18,7 @@ services:
     # # Mesmo que `docker run -i`
     stdin_open: true
     # Substitui o comando padrão da imagem do node
-    command: npm run dev
+    command: npm start
     environment:
       MYSQL_USER: root
       MYSQL_PASSWORD: 123456
