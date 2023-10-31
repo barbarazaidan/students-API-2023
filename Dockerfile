@@ -16,5 +16,12 @@ RUN npm install
 # Copie o restante dos arquivos para o diretório de trabalho
 COPY . .
 
-# Comando para iniciar a aplicação Node.js
-CMD ["npm", "start"]
+# Use uma imagem MySQL
+FROM mysql:latest
+
+# Crie um banco de dados e um usuário (substitua 'projetogeneration_db', 'root' e '123456' pelos valores desejados)
+ENV MYSQL_DATABASE=projetogeneration_db
+ENV MYSQL_ROOT_PASSWORD=123456
+
+# Comando para iniciar o MySQL
+CMD ["--name", "mysql-container", "mysqld"]
