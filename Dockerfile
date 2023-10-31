@@ -23,6 +23,9 @@ EXPOSE 3001
 # Diretório de trabalho dentro do contêiner
 WORKDIR /app
 
+# Instale o Node.js e o npm
+RUN apt-get update && apt-get install -y nodejs npm
+
 # Copie os arquivos package.json e package-lock.json para o diretório de trabalho
 COPY package*.json ./
 
