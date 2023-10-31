@@ -32,16 +32,12 @@ RUN npm install
 # Copie o restante dos arquivos para o diretório de trabalho
 COPY . .
 
-# Instale o MySQL
-RUN apt-get update && apt-get install -y mysql-server
+# Use uma imagem do MySQL
+FROM mysql:latest
 
-# Inicie o MySQL
-RUN service mysql start
-
-# Crie um banco de dados e um usuário (substitua 'seu_banco_de_dados', 'seu_usuario' e 'sua_senha' pelos valores desejados)
-RUN mysql -e "CREATE DATABASE 'projetogeneration_db';"
-RUN mysql -e "CREATE USER 'root'@'localhost' IDENTIFIED BY '123456';"
-RUN mysql -e "GRANT ALL PRIVILEGES ON projetogeneration_db.* TO 'root'@'localhost';"
+# Crie um banco de dados e um usuário (substitua 'projetogeneration_db', 'root' e '123456' pelos valores desejados)
+ENV MYSQL_DATABASE=projetogeneration_db
+ENV MYSQL_ROOT_PASSWORD=123456
 
 # Defina a variável de ambiente para a conexão do Node.js com o MySQL
 ENV DB_HOST=localhost
