@@ -7,7 +7,7 @@ const config = {
 };
 
 module.exports = {
-  // development: config,
-  // test: config,
+  development: config,
+  test: config,
   production: config,
 };
