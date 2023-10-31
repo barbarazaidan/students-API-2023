@@ -5,5 +5,5 @@ FROM mysql:latest
 ENV MYSQL_DATABASE=projetogeneration_db
 ENV MYSQL_ROOT_PASSWORD=123456
 
-# Comando para iniciar o MySQL
-CMD ["mysqld"]
+# Comando para iniciar o MySQL e dê um nome ao contêiner
+CMD ["--name", "mysql-container", "mysqld"]
