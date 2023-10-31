@@ -46,4 +46,4 @@ ENV DB_PASSWORD=123456
 ENV DB_DATABASE=projetogeneration_db
 
 # Comando para iniciar a aplicação Node.js
-CMD ["npm", "start"]
+CMD ["npm", "run", "build"]
